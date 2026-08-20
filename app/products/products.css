@@ -1,0 +1,95 @@
+/* Narrow plate column, roughly the left 55–60% of the sheet at desktop. The
+   right column is intentionally left empty so the yard shows down that side
+   of the route. Full width at mobile. */
+.products-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--gutter);
+}
+
+@media (min-width: 64rem) {
+  .products-page {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+  .products-page > .section {
+    grid-column: 1;
+  }
+}
+
+.products-page__intro,
+.products-page__schedule,
+.products-page__specs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+/* ---- The schedule: one plate, all products, as a ruled list -------------- */
+
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.schedule-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  padding-block: var(--s-5);
+  min-height: 44px;
+  border-bottom: 1px solid var(--rule);
+}
+.schedule-row:first-child { padding-top: 0; }
+.schedule-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+.schedule-row__index {
+  flex: 0 0 auto;
+  font-family: var(--font-fig);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-h3);
+  color: var(--rule-strong);
+}
+
+.schedule-row__body {
+  flex: 1 1 16rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  min-width: 0;
+}
+
+.schedule-row__body h2 {
+  font-size: var(--t-h3);
+  color: var(--maroon);
+}
+
+.schedule-row__image {
+  flex: 0 0 auto;
+  width: 140px;
+  height: auto;
+  aspect-ratio: 1200 / 573;
+  object-fit: cover;
+  border: 1px solid var(--rule-strong);
+}
+
+.schedule-row__empty {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 140px;
+  aspect-ratio: 1200 / 573;
+  padding: var(--s-2);
+  border: 1px solid var(--rule-strong);
+  background: var(--paper-2);
+}
+
+/* ---- Spec sheet table: figures in the monospace figure face -------------- */
+
+.figure-cell {
+  font-family: var(--font-fig);
+  font-variant-numeric: tabular-nums;
+  color: var(--maroon);
+}

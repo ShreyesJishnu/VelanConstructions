@@ -1,0 +1,52 @@
+/* THE NUMBERS — the primary action of the whole site. The dark plate bleeds
+   edge-to-edge (cancelling the .sheet gutter) to buy back the width a
+   16-character number needs to stay on one line at 375px, and stays biggest
+   on the page: bigger than any heading here. */
+.plate--dark.contact-numbers {
+  margin-inline: calc(-1 * var(--gutter));
+  padding-inline: var(--s-4);
+}
+
+.phone-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  justify-content: center;
+  min-height: 44px;
+  padding-block: var(--s-4);
+  text-decoration: none;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+.phone-row:hover { opacity: 0.8; }
+.phone-row + .phone-row { border-top: 1px solid var(--rule); }
+
+.figure.phone-row__number {
+  /* fits 15 characters ("+91 97158 19000") without wrapping at 375px, and
+     stays larger than --t-h2 (this page's biggest heading) at every width */
+  font-size: clamp(2rem, 7vw, 3.5rem);
+  white-space: nowrap;
+}
+
+.contact-numbers__more { margin-top: var(--s-6); }
+
+.contact-email {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-fig);
+  font-size: var(--t-small);
+  color: var(--sun);
+  text-decoration: none;
+  border-bottom: 1px solid var(--sun);
+}
+
+.contact-map {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 0;
+}
+
+@media (min-width: 48rem) {
+  .contact-map { aspect-ratio: 16 / 9; }
+}

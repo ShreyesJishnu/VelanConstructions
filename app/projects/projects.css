@@ -1,0 +1,49 @@
+.project-plate h2 {
+  font-size: var(--t-h3);
+  color: var(--maroon);
+  margin-bottom: var(--s-5);
+}
+
+.project-photo {
+  width: 100%;
+  height: auto;
+  border-top: 1px solid var(--rule-strong);
+}
+
+.project-views {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+}
+@media (min-width: 40rem) {
+  .project-views { grid-template-columns: 1fr 1fr; }
+}
+.project-views img {
+  width: 100%;
+  height: auto;
+  border-top: 1px solid var(--rule);
+}
+
+.project-plate .leader {
+  margin-top: var(--s-5);
+}
+
+/* Client logo wall: hairline rules between cells via a 1px background grid gap.
+   Full ink — no grayscale, no opacity fade, no hover-to-reveal. */
+.client-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-top: var(--s-4);
+}
+.client-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: var(--s-4);
+  background: var(--shadow);
+  object-fit: contain;
+}

@@ -1,0 +1,91 @@
+/* Home. The yard is the argument; the plates stay out of its way. */
+
+.hero { min-height: clamp(560px, 82vh, 900px); display: flex; align-items: center; }
+.hero-plate { max-width: 40rem; display: grid; gap: var(--s-5); }
+
+.hero-h1 {
+  font-size: var(--t-h1);
+  color: var(--maroon);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.98;
+}
+
+.hero-actions { display: flex; gap: var(--s-3); flex-wrap: wrap; }
+
+.hero-figs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px solid var(--rule-strong);
+}
+.hero-figs > div {
+  min-width: 0;
+  padding: var(--s-4) var(--s-4) 0 0;
+  border-right: 1px solid var(--rule);
+}
+.hero-figs > div:last-child { border-right: 0; }
+.hero-figs dd { margin: 0; }
+.hero-fig-value {
+  font-size: clamp(1.25rem, 0.7rem + 1.4vw, 2.25rem);
+  white-space: nowrap;   /* "10,000+" must never break across two lines */
+}
+
+.home-lede { margin-bottom: var(--s-6); }
+
+.home-range {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  border-top: 1px solid var(--rule);
+  margin-bottom: var(--s-5);
+}
+.home-range-item {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding-right: var(--s-4);
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: var(--ink);
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.home-range-item:hover { color: var(--maroon); border-bottom-color: var(--maroon); }
+
+.home-proof { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-6); align-items: start; }
+.home-proof-note { max-width: 34ch; margin-block: var(--s-3); color: var(--paper-3); }
+
+.home-quote { margin: 0; }
+.home-quote p { font-size: var(--t-h3); line-height: 1.35; }
+.home-quote cite {
+  display: block;
+  margin-top: var(--s-4);
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  font-style: normal;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.home-tels { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); border-top: 1px solid var(--rule); }
+.home-tels a {
+  display: grid;
+  gap: 2px;
+  min-height: 60px;
+  align-content: center;
+  padding-right: var(--s-4);
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+}
+.home-tel-no { font-family: var(--font-fig); font-size: var(--t-h3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.home-tels a:hover .home-tel-no { color: var(--maroon); }
+.home-call-note { margin-top: var(--s-5); }
+
+@media (max-width: 900px) {
+  .home-proof { grid-template-columns: 1fr; }
+  .hero-figs { grid-template-columns: 1fr; }
+  .hero-figs > div { border-right: 0; border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-3); padding-bottom: var(--s-2); }
+}
+
+/* every tel: link is a target, not running text */
+a[href^='tel:'] { display: inline-flex; align-items: center; min-height: 44px; }

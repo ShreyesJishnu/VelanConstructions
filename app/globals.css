@@ -1,0 +1,308 @@
+/* ============================================================================
+   VELAN CONCAST — THE YARD AT GOLDEN HOUR
+   The DOM layer sits on top of one persistent 3D yard. Its job is to stay
+   legible over raking sunlight and long shadows, and to keep the phone number
+   reachable at every scroll position.
+   ============================================================================ */
+
+:root {
+  /* --- The yard, as seen at 5pm ----------------------------------------- */
+  --sky-high:     #7ea6c4;   /* zenith */
+  --sky-low:      #f4c98a;   /* horizon haze */
+  --sun:          #f2a03d;   /* raking light */
+  --dust:         #e8d9be;
+
+  --concrete:     #c9c3b6;   /* cast face in light */
+  --concrete-mid: #a8a294;
+  --concrete-dark:#8a8175;   /* shadowed face */
+  --earth:        #a08a6a;   /* yard ground, compacted */
+  --shadow:       #2b2622;   /* long shadow, near-black warm */
+
+  /* --- Brand: survives every redesign ----------------------------------- */
+  --maroon:       #4c1314;
+  --maroon-deep:  #350d0e;
+  --orange:       #f57900;
+  --orange-text:  #a85400;   /* AA-safe orange for TEXT on light grounds */
+
+  /* --- Surfaces the DOM writes on --------------------------------------- */
+  --ink:          #221e1a;
+  --ink-2:        #4c453d;
+  --ink-3:        #6b6259;
+  --paper:        #f6f1e7;   /* warm card of daylight, not white */
+  --paper-2:      #ece4d6;
+  --rule:         #cabfa9;
+  --rule-strong:  #8a7f6b;
+  --paper-3:      #ddd2be;   /* secondary text on dark plates */
+  --orange-deep:  #dd8b2c;   /* sun, pressed */
+
+  /* On top of the 3D scene the plate is fully opaque — no alpha, no blur.
+     Text must never be modulated by whatever the camera happens to be seeing,
+     and blur over a live canvas is the most expensive thing this site could do.
+     Separation from the yard comes from the maroon top rule, not transparency. */
+  --plate:        #f6f1e7;
+  --plate-solid:  #f6f1e7;
+  --plate-dark:   #221e1a;
+
+  /* --- Type ------------------------------------------------------------- */
+  --font-text: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-fig:  var(--font-azeret), ui-monospace, "SF Mono", monospace;
+
+  --t-label:  0.6875rem;
+  --t-small:  0.8125rem;
+  --t-body:   1.0625rem;
+  --t-lead:   1.1875rem;
+  --t-h3:     clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+  --t-h2:     clamp(1.75rem, 1.2rem + 2.4vw, 2.75rem);
+  --t-h1:     clamp(2.5rem, 1.5rem + 4.4vw, 4.75rem);
+  --t-figure: clamp(2.25rem, 1.3rem + 4vw, 4.5rem);
+
+  --track-label: 0.15em;
+
+  /* --- Space ------------------------------------------------------------ */
+  --s-1: 0.25rem; --s-2: 0.5rem;  --s-3: 0.75rem; --s-4: 1rem;
+  --s-5: 1.5rem;  --s-6: 2rem;    --s-7: 3rem;    --s-8: 4rem;
+  --s-9: 6rem;    --s-10: 8rem;
+
+  --gutter:    clamp(1.25rem, 4vw, 3.5rem);
+  --measure:   64ch;
+  --sheet-max: 82rem;
+
+  /* --- Motion ----------------------------------------------------------- */
+  --ease:     cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast: 140ms;
+  --dur:      280ms;
+
+  --focus: 2px solid var(--orange);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--earth);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: var(--t-body);
+  line-height: 1.6;
+}
+
+img, svg, video, canvas { max-width: 100%; display: block; }
+img, svg, video { height: auto; }
+a { color: inherit; }
+h1, h2, h3, h4 { margin: 0; font-weight: 600; line-height: 1.08; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: var(--focus);
+  outline-offset: 3px;
+}
+
+/* ============================================================================
+   THE SCENE LAYER
+   One canvas, fixed, behind everything. The DOM scrolls over it.
+   ============================================================================ */
+
+.scene-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;       /* a canvas must never become a scroll source */
+  pointer-events: none;   /* the yard is scenery; only marked hotspots take input */
+}
+.scene-layer canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100%;
+}
+
+.scene-poster {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.page { position: relative; z-index: 1; }
+
+/* ============================================================================
+   PLATES — the DOM's own surface over the yard
+   ============================================================================ */
+
+.sheet { max-width: var(--sheet-max); margin-inline: auto; padding-inline: var(--gutter); }
+.section { padding-block: clamp(var(--s-8), 8vw, var(--s-10)); }
+
+/* A plate is a slab of daylight-coloured card laid on the yard. It is opaque
+   because text over a moving 3D scene must never depend on the frame behind it. */
+.plate {
+  background: var(--plate);
+  border-top: 3px solid var(--maroon);
+  padding: clamp(var(--s-5), 4vw, var(--s-8));
+}
+.plate--dark {
+  /* standalone-safe: works with or without .plate on the same element */
+  background: var(--plate-dark);
+  border-top: 3px solid var(--orange);
+  padding: clamp(var(--s-5), 4vw, var(--s-8));
+  color: var(--paper);
+}
+.plate--dark .label { color: var(--dust); }
+.plate--dark .lede  { color: var(--paper-3); }
+
+.label {
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.label--orange { color: var(--orange-text); }
+.label--maroon { color: var(--maroon); }
+
+.section-title { font-size: var(--t-h2); color: var(--maroon); text-transform: uppercase; }
+
+/* Every page's <h1>. Four different H1 treatments across six pages was the
+   single loudest inconsistency in the first pass. */
+.page-title {
+  font-size: var(--t-h1);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  color: var(--maroon);
+  text-transform: uppercase;
+}
+.plate--dark .section-title { color: var(--sun); }
+
+.lede { max-width: var(--measure); font-size: var(--t-lead); color: var(--ink-2); }
+
+.figure {
+  font-family: var(--font-fig);
+  font-size: var(--t-figure);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--maroon);
+  font-variant-numeric: tabular-nums;
+}
+.figure--sun { color: var(--sun); }
+
+/* ============================================================================
+   ACTIONS
+   ============================================================================ */
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 48px;
+  padding: var(--s-3) var(--s-5);
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.action:hover { background: var(--ink); color: var(--paper); }
+
+.action--call {
+  border-color: var(--maroon);
+  background: var(--maroon);
+  color: var(--paper);
+}
+.action--call:hover { background: var(--maroon-deep); border-color: var(--maroon-deep); }
+
+.action--sun { border-color: var(--sun); background: var(--sun); color: var(--shadow); }
+.action--sun:hover { background: var(--orange-deep); border-color: var(--orange-deep); }
+
+.leader {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  gap: var(--s-2);
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--orange-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--orange);
+}
+.plate--dark .leader { color: var(--sun); }
+
+/* A form on a dark plate: labels, values and rules all have to invert, or the
+   enquiry form reads at 1.75:1 against the plate. */
+.plate--dark .ef label { color: var(--paper-3); }
+.plate--dark .ef abbr { color: var(--sun); }
+.plate--dark .ef input,
+.plate--dark .ef select,
+.plate--dark .ef textarea {
+  color: var(--paper);
+  border-bottom-color: var(--rule-strong);
+}
+.plate--dark .ef input::placeholder,
+.plate--dark .ef textarea::placeholder { color: var(--paper-3); }
+.plate--dark .ef input:hover,
+.plate--dark .ef select:hover,
+.plate--dark .ef textarea:hover { border-bottom-color: var(--paper-3); }
+.plate--dark .ef-error { color: var(--sun); }
+.plate--dark .ef-submit .label { color: var(--paper-3); }
+.plate--dark .ef-submit .label a { color: var(--sun); }
+.plate--dark .ef select option { color: var(--ink); }
+
+.schedule { width: 100%; border-collapse: collapse; text-align: left; }
+.schedule th {
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding: var(--s-3) var(--s-4) var(--s-3) 0;
+  border-bottom: 1px solid var(--rule-strong);
+}
+.schedule td {
+  padding: var(--s-4) var(--s-4) var(--s-4) 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: baseline;
+}
+
+.stack   { display: flex; flex-direction: column; }
+.stack-2 { gap: var(--s-2); } .stack-3 { gap: var(--s-3); }
+.stack-4 { gap: var(--s-4); } .stack-5 { gap: var(--s-5); }
+.stack-6 { gap: var(--s-6); } .stack-7 { gap: var(--s-7); }
+.row     { display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: absolute; left: var(--s-4); top: -100px; z-index: 100;
+  display: inline-flex; align-items: center; min-height: 44px;
+  padding: var(--s-3) var(--s-4); background: var(--maroon); color: var(--paper);
+  font-family: var(--font-fig); font-size: var(--t-label);
+  letter-spacing: var(--track-label); text-transform: uppercase; text-decoration: none;
+}
+.skip-link:focus { top: var(--s-4); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+/* Section head used by every page */
+.sec-head { display: grid; gap: var(--s-2); margin-bottom: var(--s-6); }

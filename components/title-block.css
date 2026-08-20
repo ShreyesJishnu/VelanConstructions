@@ -1,0 +1,72 @@
+/* The footer is the last plate of the page, sitting on the yard floor. */
+
+.tb {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--s-9);
+  background: var(--plate-dark);
+  color: var(--paper);
+  border-top: 3px solid var(--orange);
+}
+
+.tb-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; }
+.tb-cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: var(--s-7) var(--s-5) var(--s-7) 0;
+  border-right: 1px solid rgba(246, 241, 231, 0.16);
+}
+.tb-cell + .tb-cell { padding-left: var(--s-5); }
+.tb-cell:last-child { border-right: 0; padding-right: 0; }
+.tb .label { color: var(--dust); }
+
+.tb-name {
+  font-family: var(--font-fig);
+  font-size: var(--t-h3);
+  color: var(--sun);
+  text-transform: uppercase;
+}
+.tb-addr { max-width: 34ch; font-size: var(--t-small); color: var(--paper-3); }
+.tb-map { align-self: flex-start; color: var(--sun); border-bottom-color: var(--sun); }
+
+.tb-tels { display: grid; gap: var(--s-2); }
+.tb-tels a { display: grid; gap: 1px; min-height: 48px; align-content: center; text-decoration: none; }
+.tb-tel-no { font-family: var(--font-fig); font-size: var(--t-body); font-variant-numeric: tabular-nums; color: var(--paper); }
+.tb-tels a:hover .tb-tel-no { color: var(--sun); }
+.tb-mail { display: inline-flex; align-items: center; min-height: 44px; font-size: var(--t-small); color: var(--paper-3); word-break: break-all; }
+
+.tb-set { display: grid; }
+.tb-set a {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 44px;
+  text-decoration: none;
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--paper-3);
+}
+.tb-set a:hover { color: var(--sun); }
+.tb-set .sheet-no { display: none; }
+
+.tb-area { font-size: var(--t-small); color: var(--paper-3); }
+.tb-legacy a { display: inline-flex; align-items: center; min-height: 44px; color: var(--sun); }
+
+.tb-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  padding-block: var(--s-4);
+  border-top: 1px solid rgba(246, 241, 231, 0.16);
+}
+
+@media (max-width: 900px) {
+  .tb-grid { grid-template-columns: 1fr 1fr; }
+  .tb-cell { border-right: 0; border-bottom: 1px solid rgba(246,241,231,0.16); padding-inline: 0; }
+  .tb-cell + .tb-cell { padding-left: 0; }
+}
+@media (max-width: 560px) { .tb-grid { grid-template-columns: 1fr; } }
