@@ -1,0 +1,181 @@
+/* Sheet A-01. The drawing leads; the claim and the number sit beside it. */
+
+.hero { border-bottom: 1px solid var(--rule-thin); }
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(var(--s-6), 5vw, var(--s-9));
+  align-items: start;
+  padding-block: clamp(var(--s-7), 6vw, var(--s-9));
+}
+
+.hero-text { display: flex; flex-direction: column; gap: var(--s-5); }
+
+.hero-h1 {
+  max-width: 14ch;
+  font-size: clamp(2.25rem, 1.2rem + 3.4vw, 4.25rem);
+  font-weight: 600;
+  line-height: 0.96;
+  letter-spacing: -0.015em;
+  color: var(--maroon);
+  text-transform: uppercase;
+}
+
+.hero-lede { font-size: var(--t-lead); }
+
+.hero-actions { display: flex; gap: var(--s-3); flex-wrap: wrap; }
+
+/* the three published figures, dimensioned along a rule */
+.hero-figs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: var(--s-3) 0 0;
+  border-top: 1px solid var(--ink);
+}
+.hero-fig {
+  display: grid;
+  gap: var(--s-2);
+  min-width: 0;
+  padding: var(--s-4) var(--s-4) 0 0;
+  border-right: 1px solid var(--rule-hair);
+}
+.hero-fig:last-child { border-right: 0; }
+.hero-fig dt { order: 2; }
+.hero-fig dd { margin: 0; order: 1; }
+.hero-fig-value {
+  font-size: clamp(1.5rem, 0.9rem + 1.5vw, 2.25rem);
+  overflow-wrap: anywhere;
+}
+
+.hero-drawing { min-width: 0; }
+
+/* ---------------------------------------------------------------- A-01.2 */
+
+.range-count { max-width: 34rem; margin-bottom: var(--s-6); }
+
+.range-index {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--s-8);
+  border-top: 1px solid var(--rule-thin);
+}
+.range-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: var(--s-4);
+  min-height: 56px;
+  padding-block: var(--s-3);
+  border-bottom: 1px solid var(--rule-hair);
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.range-no {
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  color: var(--ink-3);
+  transition: color var(--dur-fast) var(--ease);
+}
+.range-name { font-size: var(--t-lead); }
+.range-rule {
+  width: 44px;
+  height: 1px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur) var(--ease);
+}
+.range-item:hover,
+.range-item:focus-visible { border-bottom-color: var(--ink); }
+.range-item:hover .range-no,
+.range-item:focus-visible .range-no { color: var(--orange-text); }
+.range-item:hover .range-rule,
+.range-item:focus-visible .range-rule { transform: scaleX(1); }
+
+.range-more { margin-top: var(--s-6); }
+
+/* ---------------------------------------------------------------- A-01.3 */
+
+.proof-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(var(--s-6), 5vw, var(--s-9));
+  align-items: start;
+}
+.proof-figure { margin-bottom: var(--s-2); }
+.proof-note { max-width: 40ch; margin-block: var(--s-4); color: var(--ink-2); }
+
+.proof-quote {
+  margin: 0;
+  padding-top: var(--s-5);
+  border-top: 2px solid var(--maroon);
+}
+.proof-quote p {
+  font-size: var(--t-h3);
+  line-height: 1.35;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+.proof-quote cite {
+  display: block;
+  margin-top: var(--s-4);
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  font-style: normal;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ---------------------------------------------------------------- A-01.4 */
+
+.enquire-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
+  gap: clamp(var(--s-6), 5vw, var(--s-9));
+  align-items: start;
+}
+.enquire-tels { margin-top: var(--s-6); border-top: 1px solid var(--rule-thin); }
+.enquire-tels a {
+  display: grid;
+  gap: 2px;
+  min-height: 56px;
+  align-content: center;
+  padding-block: var(--s-2);
+  border-bottom: 1px solid var(--rule-hair);
+  text-decoration: none;
+}
+.enquire-tel-no {
+  font-family: var(--font-fig);
+  font-size: var(--t-h3);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  transition: color var(--dur-fast) var(--ease);
+}
+.enquire-tels a:hover .enquire-tel-no { color: var(--maroon); }
+
+/* ---------------------------------------------------------------- narrow */
+
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-drawing { order: -1; }
+  .proof-grid, .enquire-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .range-index { grid-template-columns: 1fr; }
+  .hero-figs { grid-template-columns: 1fr; border-top: 0; }
+  .hero-fig {
+    border-right: 0;
+    border-top: 1px solid var(--rule-hair);
+    padding-block: var(--s-3);
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+  }
+  .hero-fig dt { order: 1; }
+  .hero-fig dd { order: 2; text-align: right; }
+  .hero-fig-value { font-size: var(--t-h3); }
+}

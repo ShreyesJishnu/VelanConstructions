@@ -1,0 +1,88 @@
+.tb {
+  margin-top: var(--s-9);
+  border-top: 1px solid var(--rule-heavy);
+  background: var(--paper);
+}
+
+.tb-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+}
+.tb-cell {
+  padding: var(--s-6) var(--s-5) var(--s-6) 0;
+  border-right: 1px solid var(--rule-hair);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+.tb-cell + .tb-cell { padding-left: var(--s-5); }
+.tb-cell:last-child { border-right: 0; padding-right: 0; }
+
+.tb-name {
+  font-family: var(--font-fig);
+  font-size: var(--t-h3);
+  color: var(--maroon);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+}
+.tb-addr { max-width: 34ch; color: var(--ink-2); font-size: var(--t-small); }
+.tb-map { align-self: flex-start; }
+
+.tb-tels { display: grid; gap: var(--s-3); }
+.tb-tels a { display: grid; gap: 1px; text-decoration: none; min-height: 44px; align-content: center; }
+.tb-tel-no {
+  font-family: var(--font-fig);
+  font-size: var(--t-body);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.tb-tels a:hover .tb-tel-no { color: var(--maroon); }
+.tb-mail {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--t-small);
+  color: var(--ink-2);
+  word-break: break-all;
+}
+
+.tb-set { display: grid; }
+.tb-set a {
+  display: flex;
+  gap: var(--s-3);
+  align-items: baseline;
+  min-height: 40px;
+  align-content: center;
+  text-decoration: none;
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.tb-set a:hover { color: var(--maroon); }
+
+.tb-area { font-size: var(--t-small); color: var(--ink-2); }
+.tb-legacy a { color: var(--orange-text); }
+
+.tb-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  padding-block: var(--s-4);
+  border-top: 1px solid var(--rule-thin);
+}
+
+@media (max-width: 900px) {
+  .tb-grid { grid-template-columns: 1fr 1fr; }
+  .tb-cell { border-right: 0; border-bottom: 1px solid var(--rule-hair); padding-inline: 0; }
+  .tb-cell + .tb-cell { padding-left: 0; }
+  .tb-cell:nth-child(odd) { padding-right: var(--s-5); border-right: 1px solid var(--rule-hair); }
+}
+@media (max-width: 560px) {
+  .tb-grid { grid-template-columns: 1fr; }
+  .tb-cell:nth-child(odd) { padding-right: 0; border-right: 0; }
+  .call-fab ~ * { }
+  .tb-strip { padding-bottom: calc(var(--s-8) + var(--s-4)); }
+}

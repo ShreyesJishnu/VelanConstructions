@@ -1,0 +1,122 @@
+/* Header = the top rule of the sheet. It carries the wordmark, the drawing set,
+   and the phone number that must never leave the page. */
+
+.hdr {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule-heavy);
+}
+
+.hdr-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--s-5);
+  min-height: 72px;
+  padding-block: var(--s-3);
+}
+
+.hdr-mark { display: inline-flex; align-items: center; min-height: 44px; flex: none; }
+.hdr-mark img { width: clamp(132px, 14vw, 180px); height: auto; }
+
+.hdr-nav ul { display: flex; gap: clamp(var(--s-3), 1.6vw, var(--s-6)); justify-content: center; }
+
+.hdr-link {
+  display: grid;
+  gap: 2px;
+  padding: var(--s-2) 0;
+  text-decoration: none;
+  color: var(--ink-2);
+  border-bottom: 2px solid transparent;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.hdr-link-sheet {
+  font-family: var(--font-fig);
+  font-size: 0.625rem;
+  letter-spacing: var(--track-label);
+  color: var(--ink-3);
+}
+.hdr-link-title {
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+.hdr-link:hover { color: var(--ink); border-bottom-color: var(--rule-thin); }
+.hdr-link.is-active { color: var(--maroon); border-bottom-color: var(--orange); }
+.hdr-link.is-active .hdr-link-sheet { color: var(--orange-text); }
+
+.hdr-call { display: flex; align-items: center; gap: var(--s-4); }
+
+.hdr-tel { display: grid; gap: 1px; align-content: center; min-height: 44px; text-decoration: none; color: var(--ink); }
+.hdr-tel-no {
+  font-family: var(--font-fig);
+  font-size: var(--t-small);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.hdr-tel:hover .hdr-tel-no { color: var(--maroon); }
+
+.hdr-toggle {
+  display: none;
+  min-height: 48px;
+  min-width: 48px;
+  padding-inline: var(--s-3);
+  background: none;
+  border: 1px solid var(--rule-thin);
+  cursor: pointer;
+}
+
+.hdr-drawer { display: none; border-top: 1px solid var(--rule-hair); padding-block: var(--s-3); }
+.hdr-drawer ul { display: grid; }
+.hdr-drawer-link {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+  min-height: 52px;
+  padding-block: var(--s-3);
+  border-bottom: 1px solid var(--rule-hair);
+  text-decoration: none;
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+.hdr-drawer-link[aria-current='page'] { color: var(--maroon); }
+
+/* The call button that follows the visitor on small screens. */
+.call-fab {
+  position: fixed;
+  right: var(--s-4);
+  bottom: var(--s-4);
+  z-index: 30;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  min-height: 56px;
+  padding-inline: var(--s-4);
+  background: var(--maroon);
+  color: var(--paper);
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  text-decoration: none;
+  border: 1px solid var(--maroon-deep);
+}
+
+@media (max-width: 960px) {
+  .hdr-inner { grid-template-columns: auto 1fr auto; }
+  .hdr-nav { display: none; }
+  .hdr-toggle { display: inline-flex; align-items: center; justify-content: center; }
+  .hdr-drawer { display: block; }
+  .hdr-drawer[hidden] { display: none; }
+  .hdr-wa { display: none; }
+  .call-fab { display: inline-flex; }
+}
+
+@media (max-width: 560px) {
+  .hdr-tel { display: none; }
+}

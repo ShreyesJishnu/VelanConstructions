@@ -1,0 +1,189 @@
+/* The drawing. Every stage change is a change of line weight, dash, or opacity —
+   the pen adds and removes linework, it never slides panels around. */
+
+.sd { margin: 0; display: grid; gap: var(--s-5); }
+
+.sd-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  stroke-linecap: square;
+}
+
+.sd-svg text {
+  font-family: var(--font-fig);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  fill: var(--ink-3);
+}
+.sd-anno--fig { fill: var(--ink-2); }
+.sd-anno--call { fill: var(--orange-text); font-weight: 500; }
+
+/* --- permanent linework ------------------------------------------------- */
+.sd-ground { stroke: var(--ink); stroke-width: 2; }
+.sd-ground-hatch line { stroke: var(--rule-thin); stroke-width: 1; }
+
+/* --- the mould ---------------------------------------------------------- */
+.sd-mould { transition: opacity var(--dur) var(--ease); }
+.sd-mould rect { fill: none; stroke: var(--ink-2); stroke-width: 2; stroke-dasharray: 10 6; }
+.sd-mould line { stroke: var(--ink-3); stroke-width: 1; }
+
+/* --- the concrete ------------------------------------------------------- */
+.sd-hatch-line { stroke: var(--rule-thin); stroke-width: 1; }
+.sd-concrete { transition: opacity var(--dur) var(--ease); }
+.sd-outline { fill: none; stroke: var(--ink); stroke-width: 2.5; transition: opacity var(--dur) var(--ease); }
+.sd-outline--inner { stroke-width: 1.5; }
+
+.sd-rebar line {
+  stroke: var(--maroon);
+  stroke-width: 1;
+  stroke-dasharray: 5 4;
+  opacity: 0.85;
+}
+.sd-rebar, .sd-hooks, .sd-sling, .sd-services, .sd-callout, .sd-dim--wall {
+  transition: opacity var(--dur) var(--ease);
+}
+.sd-hooks path, .sd-sling line, .sd-sling path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+.sd-sling circle { fill: var(--paper); stroke: var(--ink); stroke-width: 2; }
+.sd-services line { stroke: var(--ink-2); stroke-width: 2; }
+.sd-cover { stroke: var(--ink) !important; stroke-width: 4 !important; }
+
+.sd-dim line { stroke: var(--rule-thin); stroke-width: 1; }
+.sd-witness { stroke: var(--rule-thin); stroke-width: 1; stroke-dasharray: 3 3; }
+.sd-tick { stroke: var(--ink-2); stroke-width: 1.5; }
+
+.sd-callout line { stroke: var(--orange); stroke-width: 1.5; }
+.sd-callout circle { fill: var(--orange); stroke: none; }
+
+/* --- the unit lifts ----------------------------------------------------- */
+.sd-unit { transition: transform var(--dur-draw) var(--ease); }
+
+/* ========================================================================
+   STAGE STATES — what is drawn, and what is not, at each step
+   ======================================================================== */
+
+/* default: everything that is stage-specific starts hidden */
+.sd-rebar, .sd-hooks, .sd-sling, .sd-services, .sd-callout, .sd-dim--wall { opacity: 0; }
+
+/* 01 MOULD — the empty steel mould, nothing cast yet */
+.sd[data-stage='mould'] .sd-concrete,
+.sd[data-stage='mould'] .sd-outline { opacity: 0; }
+
+/* 02 CAST — reinforcement in, concrete poured, mould still around it */
+.sd[data-stage='cast'] .sd-rebar,
+.sd[data-stage='cast'] .sd-dim--wall { opacity: 1; }
+
+/* 03 CURE — mould struck; the single continuous outline is the whole point */
+.sd[data-stage='cure'] .sd-mould { opacity: 0; }
+.sd[data-stage='cure'] .sd-callout,
+.sd[data-stage='cure'] .sd-dim--wall { opacity: 1; }
+.sd[data-stage='cure'] .sd-outline { stroke-width: 3.5; }
+
+/* 04 LIFT — hooks and sling take it off the bed */
+.sd[data-stage='lift'] .sd-mould { opacity: 0; }
+.sd[data-stage='lift'] .sd-hooks,
+.sd[data-stage='lift'] .sd-sling { opacity: 1; }
+.sd[data-stage='lift'] .sd-unit { transform: translateY(-46px); }
+
+/* 05 DELIVER — set on the ground, services connected, cover on */
+.sd[data-stage='deliver'] .sd-mould { opacity: 0; }
+.sd[data-stage='deliver'] .sd-hooks,
+.sd[data-stage='deliver'] .sd-services { opacity: 1; }
+
+/* ========================================================================
+   CONTROLS — the scrub reads as a dimension line with station marks
+   ======================================================================== */
+
+.sd-controls { display: grid; gap: var(--s-4); }
+
+.sd-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 44px;
+  background: transparent;
+  cursor: ew-resize;
+  margin: 0;
+}
+.sd-range::-webkit-slider-runnable-track {
+  height: 1px;
+  background: var(--ink);
+}
+.sd-range::-moz-range-track { height: 1px; background: var(--ink); }
+.sd-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 3px;
+  height: 26px;
+  margin-top: -13px;
+  background: var(--orange);
+  border: 0;
+  border-radius: 0;
+}
+.sd-range::-moz-range-thumb {
+  width: 3px;
+  height: 26px;
+  background: var(--orange);
+  border: 0;
+  border-radius: 0;
+}
+
+.sd-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--rule-thin);
+}
+.sd-step {
+  display: grid;
+  gap: var(--s-1);
+  width: 100%;
+  min-height: 56px;
+  padding: var(--s-3) var(--s-2);
+  text-align: left;
+  background: none;
+  border: 0;
+  border-right: 1px solid var(--rule-hair);
+  cursor: pointer;
+  color: var(--ink-3);
+  transition: color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.sd-steps li:last-child .sd-step { border-right: 0; }
+.sd-step-no {
+  font-family: var(--font-fig);
+  font-size: 0.625rem;
+  letter-spacing: var(--track-label);
+}
+.sd-step-name {
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+.sd-step:hover { color: var(--ink); }
+.sd-step { position: relative; }
+.sd-step.is-current { color: var(--maroon); }
+/* the active station is struck on the rule above it, not boxed */
+.sd-step.is-current::before {
+  content: "";
+  position: absolute;
+  inset-block-start: -1px;
+  inset-inline: 0;
+  height: 2px;
+  background: var(--orange);
+}
+
+.sd-note {
+  max-width: 52ch;
+  min-height: 3.2em;
+  color: var(--ink-2);
+  font-size: var(--t-small);
+}
+
+@media (max-width: 640px) {
+  .sd-steps { grid-template-columns: repeat(3, 1fr); }
+  .sd-steps li:nth-child(3) .sd-step { border-right: 0; }
+  .sd-svg text { font-size: 17px; }
+}

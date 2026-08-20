@@ -1,0 +1,80 @@
+/* Sheet A-02 — Products. The whole range on one sheet, ruled, no cards. */
+
+.prod-head { padding-bottom: var(--s-2); }
+
+.prod-title {
+  font-size: var(--t-h1);
+  color: var(--maroon);
+  text-transform: uppercase;
+}
+
+.prod-schedule {
+  border-top: 1px solid var(--rule-thin);
+}
+
+.prod-row {
+  display: grid;
+  grid-template-columns: auto minmax(180px, 260px) 1fr;
+  align-items: start;
+  gap: var(--s-5);
+  padding-block: var(--s-6);
+  border-bottom: 1px solid var(--rule-hair);
+  transition: border-color var(--dur-fast) var(--ease),
+              border-bottom-width var(--dur-fast) var(--ease);
+}
+.prod-row:last-child { border-bottom: 1px solid var(--rule-thin); }
+
+.prod-row:hover,
+.prod-row:focus-within {
+  border-bottom-width: 2px;
+  border-bottom-color: var(--rule-heavy);
+}
+
+.prod-no {
+  padding-top: var(--s-1);
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  color: var(--ink-3);
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease);
+}
+.prod-row:hover .prod-no,
+.prod-row:focus-within .prod-no {
+  color: var(--orange-text);
+}
+
+.prod-photo {
+  width: 100%;
+  max-width: 260px;
+  min-width: 180px;
+  height: auto;
+}
+
+.prod-copy h2 {
+  font-size: var(--t-h3);
+  color: var(--maroon);
+  margin-bottom: var(--s-2);
+}
+.prod-copy p {
+  max-width: 60ch;
+  color: var(--ink-2);
+  margin-bottom: var(--s-3);
+}
+
+.prod-quote {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--s-7);
+}
+.prod-quote .ef { flex: 1 1 22rem; }
+.prod-call { flex: 0 0 auto; padding-top: var(--s-2); }
+
+@media (max-width: 700px) {
+  .prod-row {
+    grid-template-columns: 1fr;
+    gap: var(--s-3);
+  }
+  .prod-photo { max-width: 260px; }
+}

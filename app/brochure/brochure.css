@@ -1,0 +1,51 @@
+/* Sheet A-05 — Spec sheets. A ruled index of downloadable PDFs, no cards. */
+
+.broch-head { padding-bottom: var(--s-2); }
+
+.broch-title {
+  font-size: var(--t-h1);
+  color: var(--maroon);
+  text-transform: uppercase;
+}
+
+.broch-capacity {
+  font-family: var(--font-fig);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.broch-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--orange-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--orange);
+  transition: gap var(--dur-fast) var(--ease);
+}
+.broch-link:hover { border-bottom-width: 2px; }
+
+.broch-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-6);
+  margin-bottom: var(--s-5);
+}
+.broch-images img {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+}
+
+.broch-close {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-5);
+  border-top: 1px solid var(--rule-thin);
+  padding-block: var(--s-6);
+}
