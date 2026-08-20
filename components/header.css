@@ -43,7 +43,7 @@
 
 /* The primary action is the phone number, and it is the filled stamp. */
 .hdr-tel { flex-direction: column; align-items: flex-start; gap: 0; padding-block: var(--s-2); }
-.hdr-tel-label { font-size: 0.625rem; opacity: 0.75; letter-spacing: var(--track-label); }
+.hdr-tel-label { font-size: var(--t-micro); opacity: 0.75; letter-spacing: var(--track-label); }
 .hdr-tel-no { font-size: var(--t-small); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
 
 .hdr-wa {

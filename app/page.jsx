@@ -20,7 +20,7 @@ export default function Home() {
         <div className="sheet">
           <div className="plate hero-plate">
             <p className="label label--orange">Precast concrete · Coimbatore</p>
-            <h1 className="hero-h1">Cast in one mould. Delivered finished.</h1>
+            <h1 className="page-title hero-h1">Cast in one mould. Delivered finished.</h1>
             <p className="lede">
               Sumps, septic tanks, STP/ETP units, cabin rooms and shelters, poured as one
               piece in our yard and set on your site in a single lift.

@@ -234,6 +234,8 @@ A single palette serves both the render and the DOM: `PALETTE` in `components/sc
 - **Lede** (`.lede`, `--t-lead` 1.1875rem, `--ink-2`, `max-width: var(--measure)` = 64ch): the one paragraph under a section head.
 - **Body** (`--t-body` 1.0625rem, line-height 1.6): running prose.
 - **Small** (`--t-small` 0.8125rem): captions, footer addresses, step notes.
+- **Micro** (`--t-micro` 0.625rem, Azeret Mono, tracking `--track-label`): the one step below Label — the CALL kicker in the header stamp and the two-digit step numbers on the scrub controls. Nothing else may use it.
+- **Telephone** (`--t-tel` `clamp(1.75rem, 1rem + 3vw, 3rem)`, Azeret Mono, `white-space: nowrap`): the contact page's phone numbers. A separate step from `--t-figure` for one reason — at 375px `--t-figure` breaks "+91 97158 19000" across two lines, and a phone number that wraps is a phone number nobody dials.
 - **Label** (`.label`, Azeret Mono 500, `--t-label` 0.6875rem, tracking `--track-label` 0.15em, uppercase, `--ink-3`; `--dust` inside `.plate--dark`): the only small-type voice in the system — section kickers, table headers, field labels, button text, hints, citations.
 
 ### Named Rules

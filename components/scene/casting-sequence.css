@@ -64,7 +64,7 @@
   transition: color var(--dur-fast) var(--ease);
 }
 .cast-steps li:last-child .cast-step { border-right: 0; }
-.cast-step-no { font-family: var(--font-fig); font-size: 0.625rem; letter-spacing: var(--track-label); }
+.cast-step-no { font-family: var(--font-fig); font-size: var(--t-micro); letter-spacing: var(--track-label); }
 .cast-step-name {
   font-family: var(--font-fig);
   font-size: var(--t-label);

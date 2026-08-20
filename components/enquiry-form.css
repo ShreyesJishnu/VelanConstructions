@@ -33,7 +33,7 @@
   color: var(--ink);
   background: transparent;
   border: 0;
-  border-bottom: 1px solid var(--rule-thin);
+  border-bottom: 1px solid var(--rule-strong);
   border-radius: 0;
   transition: border-color var(--dur-fast) var(--ease);
 }

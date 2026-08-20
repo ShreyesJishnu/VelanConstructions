@@ -23,7 +23,7 @@
 .figure.phone-row__number {
   /* fits 15 characters ("+91 97158 19000") without wrapping at 375px, and
      stays larger than --t-h2 (this page's biggest heading) at every width */
-  font-size: clamp(2rem, 7vw, 3.5rem);
+  font-size: var(--t-tel);
   white-space: nowrap;
 }
 
