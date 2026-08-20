@@ -1,0 +1,5 @@
+node_modules/
+.next/
+.site-cache/
+data/*.json
+.DS_Store
