@@ -19,7 +19,8 @@
   align-items: center;
   min-height: 44px;
   font-family: var(--font-fig);
-  font-size: var(--t-label);
+  font-size: var(--t-ui);
+  font-weight: 600;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
   color: var(--orange-text);

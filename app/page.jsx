@@ -64,7 +64,7 @@ export default function Home() {
           <ol className="range-index will-draw">
             {products.map((p, i) => (
               <li key={p.slug}>
-                <Link href="/products" className="range-item">
+                <Link href={`/products/${p.slug}`} className="range-item">
                   <span className="range-no">{`A-02.${i + 1}`}</span>
                   <span className="range-name">{p.name}</span>
                   <span className="range-rule" aria-hidden="true" />
@@ -93,10 +93,15 @@ export default function Home() {
             <p><Link className="leader" href="/projects">See the client wall</Link></p>
           </div>
 
-          <blockquote className="proof-quote">
-            <p>{testimonials[0].text}</p>
-            <cite>{testimonials[0].name}</cite>
-          </blockquote>
+          <div className="home-quotes">
+            <p className="label label--maroon home-quotes-head">What customers say</p>
+            {testimonials.map((t) => (
+              <blockquote className="home-quote" key={t.name}>
+                <p>{t.text}</p>
+                <cite>{t.name}</cite>
+              </blockquote>
+            ))}
+          </div>
         </div>
       </section>
 

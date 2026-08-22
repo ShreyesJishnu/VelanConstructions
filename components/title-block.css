@@ -41,8 +41,9 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-size: var(--t-small);
-  color: var(--ink-2);
+  font-size: var(--t-ui);
+  font-weight: 600;
+  color: var(--maroon);
   word-break: break-all;
 }
 
@@ -51,11 +52,12 @@
   display: flex;
   gap: var(--s-3);
   align-items: baseline;
-  min-height: 40px;
+  min-height: 44px;
   align-content: center;
   text-decoration: none;
   font-family: var(--font-fig);
-  font-size: var(--t-label);
+  font-size: var(--t-ui);
+  font-weight: 600;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
   color: var(--ink-2);
@@ -63,7 +65,27 @@
 .tb-set a:hover { color: var(--maroon); }
 
 .tb-area { font-size: var(--t-small); color: var(--ink-2); }
-.tb-legacy a { color: var(--orange-text); }
+.tb-legacy a {
+  display: inline-block;
+  padding-block: var(--s-2);
+  color: var(--orange-text);
+}
+
+/* The yard's location closes every sheet, the way a drawing carries its site
+   plan. Lazy so it never blocks the page it sits under. */
+.tb-map-band {
+  border-top: 1px solid var(--rule-thin);
+  height: clamp(180px, 22vw, 260px);
+}
+.tb-map-band iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  filter: grayscale(1) contrast(0.95);
+  transition: filter var(--dur) var(--ease);
+}
+.tb-map-band:hover iframe { filter: none; }
 
 .tb-strip {
   display: flex;
@@ -83,6 +105,5 @@
 @media (max-width: 560px) {
   .tb-grid { grid-template-columns: 1fr; }
   .tb-cell:nth-child(odd) { padding-right: 0; border-right: 0; }
-  .call-fab ~ * { }
-  .tb-strip { padding-bottom: calc(var(--s-8) + var(--s-4)); }
+  .tb-strip { padding-bottom: var(--s-5); }
 }

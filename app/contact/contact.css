@@ -2,6 +2,11 @@
    Rules separate, nothing is boxed. */
 
 .contact-head { max-width: var(--measure); }
+.contact-title {
+  font-size: var(--t-h1);
+  color: var(--maroon);
+  text-transform: uppercase;
+}
 
 .contact-numbers {
   border-top: 1px solid var(--rule-thin);

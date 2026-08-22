@@ -12,7 +12,7 @@ const archivo = Archivo({
 })
 const azeret = Azeret_Mono({
   subsets: ['latin'],
-  weight: ['400', '500'],
+  weight: ['400', '500', '600'],
   variable: '--font-azeret',
   display: 'swap',
 })

@@ -11,12 +11,17 @@
 
   /* --- Ink ------------------------------------------------------------- */
   --ink:          #16181a;   /* body text, primary linework */
-  --ink-2:        #4a4d50;   /* secondary text, annotation */
-  --ink-3:        #67696e;   /* labels, sheet metadata — 5.26:1 on paper, 4.82:1 on sunk */
+  --ink-2:        #3c3f42;   /* secondary text, annotation */
+  --ink-3:        #54565b;   /* labels, sheet metadata — 7.04:1 on paper, 6.45:1 on sunk */
 
   /* --- Rules: the whole language is line weights ------------------------ */
-  --rule-hair:    #e6e2d7;   /* 5mm construction grid, minor */
-  --rule-major:   #d8d2c2;   /* 25mm major grid line */
+  --rule-hair:    #e6e2d7;   /* hairline borders on real linework */
+  --rule-major:   #d8d2c2;   /* heavier drawn rule */
+
+  /* The printed grid is texture, not linework. Kept far under the ink so body
+     copy never sits on a competing line: 1.04:1 and 1.13:1 against paper. */
+  --grid-fine:    #f7f5f0;   /* 5mm construction grid */
+  --grid-major:   #efece3;   /* 25mm major grid line */
   --rule-thin:    #b9b4a7;   /* dimension strings, table rules */
   --rule-heavy:   var(--ink);/* section cuts, object outlines */
 
@@ -31,8 +36,9 @@
   --font-text: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-fig:  var(--font-azeret), ui-monospace, "SF Mono", monospace;
 
-  --t-label:  0.6875rem;  /* 11px — sheet labels, ALL CAPS, tracked */
-  --t-small:  0.8125rem;
+  --t-label:  0.8125rem;  /* 13px — fine print: sheet numbers, dimension strings */
+  --t-ui:     0.9375rem;  /* 15px — anything the visitor acts on or must read */
+  --t-small:  0.875rem;
   --t-body:   1rem;
   --t-lead:   1.125rem;
   --t-h3:     clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
@@ -40,7 +46,7 @@
   --t-h1:     clamp(2.5rem, 1.4rem + 5.2vw, 5.5rem);
   --t-figure: clamp(2.5rem, 1.4rem + 5vw, 6rem);  /* the big drawn numbers */
 
-  --track-label: 0.16em;
+  --track-label: 0.12em;
   --track-caps:  0.04em;
 
   /* --- Space: 8px base, named for a drawing office ---------------------- */
@@ -56,7 +62,7 @@
   --s-10: 8rem;
 
   --gutter:     clamp(1.25rem, 4vw, 4rem);
-  --measure:    68ch;         /* max reading width */
+  --measure:    66ch;         /* max reading width */
   --sheet-max:  86rem;
 
   /* --- Motion: a plotter pen moves at constant speed -------------------- */
@@ -85,14 +91,15 @@ body {
   /* Drafting paper: a fine 5mm grid with a heavier 25mm major grid over it,
      the way a real gridded sheet is printed — not a uniform one-weight mesh. */
   background-image:
-    linear-gradient(to right,  var(--rule-major) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--rule-major) 1px, transparent 1px),
-    linear-gradient(to right,  var(--rule-hair) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--rule-hair) 1px, transparent 1px);
+    linear-gradient(to right,  var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to right,  var(--grid-fine) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-fine) 1px, transparent 1px);
   background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
   color: var(--ink);
   font-family: var(--font-text);
   font-size: var(--t-body);
+  font-weight: 500;
   line-height: 1.6;
   font-synthesis-weight: none;
 }
@@ -148,10 +155,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .label {
   font-family: var(--font-fig);
   font-size: var(--t-label);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .label--ink    { color: var(--ink); }
 .label--maroon { color: var(--maroon); }
@@ -202,6 +209,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   background: var(--rule-thin);
   position: relative;
 }
+/* Read from the left: the opening rule is an origin mark, not half the row. */
+.dim::before { flex: 0 0 var(--s-6); }
 /* witness ticks at each end */
 .dim--ticked::before,
 .dim--ticked::after {
@@ -220,7 +229,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   font-family: var(--font-fig);
   font-size: var(--t-figure);
   font-weight: 500;
-  line-height: 0.86;
+  line-height: 0.9;
   letter-spacing: -0.03em;
   color: var(--maroon);
   font-variant-numeric: tabular-nums;
@@ -240,8 +249,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   min-height: 48px;
   padding: var(--s-3) var(--s-5);
   font-family: var(--font-fig);
-  font-size: var(--t-label);
-  font-weight: 500;
+  font-size: var(--t-ui);
+  font-weight: 600;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
   text-decoration: none;
@@ -274,12 +283,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   min-height: 44px;
   gap: var(--s-2);
   font-family: var(--font-fig);
-  font-size: var(--t-label);
+  font-size: var(--t-ui);
+  font-weight: 600;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
   color: var(--orange-text);
   text-decoration: none;
-  border-bottom: 1px solid var(--orange);
+  border-bottom: 2px solid var(--orange);
   padding-bottom: 2px;
   transition: gap var(--dur-fast) var(--ease);
 }
@@ -293,11 +303,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .schedule caption { text-align: left; padding-bottom: var(--s-3); }
 .schedule th {
   font-family: var(--font-fig);
-  font-size: var(--t-label);
-  font-weight: 500;
+  font-size: var(--t-ui);
+  font-weight: 600;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--maroon);
   padding: var(--s-3) var(--s-4) var(--s-3) 0;
   border-bottom: 1px solid var(--rule-heavy);
 }
@@ -317,7 +327,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .stack-4   { gap: var(--s-4); } .stack-5 { gap: var(--s-5); }
 .stack-6   { gap: var(--s-6); } .stack-7 { gap: var(--s-7); }
 .row       { display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap; }
-.section   { padding-block: clamp(var(--s-8), 9vw, var(--s-10)); }
+.section   { padding-block: clamp(var(--s-7), 5vw, var(--s-9)); }
+/* On a phone the airy desktop rhythm is dead scroll between the visitor and
+   the phone number. Desktop keeps its full composition. */
+@media (max-width: 640px) {
+  .section { padding-block: var(--s-6); }
+}
 .section--sunk { background: var(--paper-sunk); }
 
 .visually-hidden {

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import SheetHead from '../../components/SheetHead'
 import EnquiryForm from '../../components/EnquiryForm'
 import { products, primaryPhone } from '../../lib/site'
@@ -42,7 +43,7 @@ export default function ProductsPage() {
                 <div className="prod-copy">
                   <h2>{p.name}</h2>
                   <p>{p.note}</p>
-                  <a className="leader" href={p.legacy}>Full detail</a>
+                  <Link className="leader" href={`/products/${p.slug}`}>Open sheet A-02.{i + 1}</Link>
                 </div>
               </li>
             ))}

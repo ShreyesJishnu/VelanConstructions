@@ -1,6 +1,6 @@
 'use client'
 
-import { useId, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import './sump-drawing.css'
 
 // The signature interaction: one precast unit, drawn in section, scrubbed through the
@@ -16,14 +16,46 @@ const STAGES = [
 
 export default function SumpDrawing() {
   const [stage, setStage] = useState(0)
+  // The scrubber read as decoration: nothing moved, so nobody discovered it.
+  // It now advances on its own until the visitor takes over, which both
+  // demonstrates the five stages and shows the control is live.
+  const [playing, setPlaying] = useState(true)
+  const tookOver = useRef(false)
   const uid = useId().replace(/:/g, '')
   const current = STAGES[stage]
 
+  useEffect(() => {
+    if (!playing) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setPlaying(false)
+      return
+    }
+    const t = setInterval(() => setStage((i) => (i + 1) % STAGES.length), 3200)
+    return () => clearInterval(t)
+  }, [playing])
+
+  // Any deliberate input hands control over for good.
+  function take(next) {
+    tookOver.current = true
+    setPlaying(false)
+    setStage(next)
+  }
+
   return (
-    <figure className="sd" data-stage={current.key}>
+    <figure
+      className="sd"
+      data-stage={current.key}
+      onMouseEnter={() => setPlaying(false)}
+      onMouseLeave={() => { if (!tookOver.current) setPlaying(true) }}
+    >
+      <div className="sd-title">
+        <span className="sd-title-name">Precast sump &mdash; section</span>
+        <span className="sd-title-no">DRG. A-01/01</span>
+      </div>
+
       <svg
         className="sd-svg"
-        viewBox="0 0 800 540"
+        viewBox="0 22 790 476"
         role="img"
         aria-label={`Section drawing of a precast sump at stage ${stage + 1} of 5: ${current.name}`}
       >
@@ -126,9 +158,19 @@ export default function SumpDrawing() {
       </svg>
 
       <figcaption className="sd-controls">
-        <label className="label label--ink" htmlFor={`scrub-${uid}`}>
-          Stage {stage + 1} / 5 — drag, or use arrow keys
-        </label>
+        <div className="sd-head">
+          <label className="label label--ink sd-head-label" htmlFor={`scrub-${uid}`}>
+            How it is made — stage {stage + 1} of 5: {current.name}
+          </label>
+          <button
+            type="button"
+            className="sd-play"
+            onClick={() => { tookOver.current = true; setPlaying((p) => !p) }}
+          >
+            {playing ? 'Pause' : 'Play'}
+            <span className="visually-hidden"> the making-of sequence</span>
+          </button>
+        </div>
 
         <input
           id={`scrub-${uid}`}
@@ -138,7 +180,7 @@ export default function SumpDrawing() {
           max={STAGES.length - 1}
           step={1}
           value={stage}
-          onChange={(e) => setStage(Number(e.target.value))}
+          onChange={(e) => take(Number(e.target.value))}
           aria-valuetext={current.name}
         />
 
@@ -149,7 +191,7 @@ export default function SumpDrawing() {
                 type="button"
                 className={`sd-step${i === stage ? ' is-current' : ''}`}
                 aria-current={i === stage ? 'step' : undefined}
-                onClick={() => setStage(i)}
+                onClick={() => take(i)}
               >
                 <span className="sd-step-no">{String(i + 1).padStart(2, '0')}</span>
                 <span className="sd-step-name">{s.name}</span>

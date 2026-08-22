@@ -108,27 +108,34 @@
 .proof-figure { margin-bottom: var(--s-2); }
 .proof-note { max-width: 40ch; margin-block: var(--s-4); color: var(--ink-2); }
 
-.proof-quote {
+.home-quotes-head { margin-bottom: var(--s-4); }
+
+/* Four ruled quotes stacked in the column that previously held one, so the
+   right half of this row is doing work instead of sitting empty. */
+.home-quote {
   margin: 0;
-  padding-top: var(--s-5);
-  border-top: 2px solid var(--maroon);
+  padding: var(--s-4) 0;
+  border-top: 1px solid var(--rule-hair);
 }
-.proof-quote p {
-  font-size: var(--t-h3);
-  line-height: 1.35;
+.home-quote:first-of-type { border-top: 2px solid var(--maroon); }
+.home-quote p {
+  font-size: var(--t-lead);
+  line-height: 1.45;
   color: var(--ink);
   text-wrap: pretty;
 }
-.proof-quote cite {
+.home-quote cite {
   display: block;
-  margin-top: var(--s-4);
+  margin-top: var(--s-2);
   font-family: var(--font-fig);
   font-size: var(--t-label);
+  font-weight: 600;
   font-style: normal;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--orange-text);
 }
+
 
 /* ---------------------------------------------------------------- A-01.4 */
 

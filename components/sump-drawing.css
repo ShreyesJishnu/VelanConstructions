@@ -3,6 +3,55 @@
 
 .sd { margin: 0; display: grid; gap: var(--s-5); }
 
+/* Every drawing carries its title. Left-aligned, like the sheet it sits on. */
+.sd-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--rule-heavy);
+  text-align: left;
+}
+.sd-title-name {
+  font-family: var(--font-fig);
+  font-size: var(--t-ui);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--maroon);
+}
+.sd-title-no {
+  font-family: var(--font-fig);
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+.sd-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+}
+.sd-head-label { text-align: left; }
+.sd-play {
+  min-height: 44px;
+  padding: var(--s-2) var(--s-4);
+  font-family: var(--font-fig);
+  font-size: var(--t-ui);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--maroon);
+  background: transparent;
+  border: 1px solid var(--rule-thin);
+  cursor: pointer;
+}
+.sd-play:hover { border-color: var(--maroon); background: var(--paper-sunk); }
+
 .sd-svg {
   width: 100%;
   height: auto;

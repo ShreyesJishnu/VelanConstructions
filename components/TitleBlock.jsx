@@ -1,10 +1,20 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { company, nav } from '../lib/site'
 import './title-block.css'
 
 // Every drawing closes with its title block. Ours carries the contact details,
 // the drawing set, and the sheet's own metadata.
+// The home and contact sheets already carry this map in the page body, so the
+// footer would show the same embed twice.
+const MAP_IN_PAGE = ['/', '/contact']
+
 export default function TitleBlock() {
+  const pathname = usePathname()
+  const showMap = !MAP_IN_PAGE.includes(pathname)
+
   return (
     <footer className="tb">
       <div className="sheet">
@@ -56,6 +66,17 @@ export default function TitleBlock() {
             </p>
           </section>
         </div>
+
+        {showMap && (
+        <div className="tb-map-band">
+          <iframe
+            src={company.mapEmbed}
+            title="Velan Concast, 60C Collector Sivakumar St, Coimbatore \u2014 on Google Maps"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+        )}
 
         <div className="tb-strip">
           <span className="label">Velan Concast · Precast concrete products</span>

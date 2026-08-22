@@ -68,7 +68,17 @@
   align-items: flex-start;
   gap: var(--s-7);
 }
-.prod-quote .ef { flex: 1 1 22rem; }
+.prod-quote .ef { flex: 1 1 30rem; }
+/* The compact form is single-column by default, which left the right half of
+   this row empty on a desktop. Give it both columns once there is room. */
+@media (min-width: 900px) {
+  .prod-quote .ef--compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: none;
+  }
+  .prod-quote .ef--compact .ef-row--wide,
+  .prod-quote .ef--compact .ef-submit { grid-column: 1 / -1; }
+}
 .prod-call { flex: 0 0 auto; padding-top: var(--s-2); }
 
 @media (max-width: 700px) {

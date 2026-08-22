@@ -15,7 +15,7 @@ export default function ContactPage() {
       <div className="sheet section">
         <div className="stack stack-4 contact-head">
           <span className="label">SHEET A-06</span>
-          <h1>Contact</h1>
+          <h1 className="contact-title">Contact</h1>
           <p className="lede">
             Call to talk through a requirement, or send an enquiry below. The numbers
             below reach the yard directly.

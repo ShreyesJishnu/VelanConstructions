@@ -1,6 +1,11 @@
 /* About — Sheet A-04 */
 
 .about-head { padding-top: var(--s-4); }
+.about-title {
+  font-size: var(--t-h1);
+  color: var(--maroon);
+  text-transform: uppercase;
+}
 
 /* THE FIGURES — ruled row, vertical hairlines between cells, no boxes */
 .about-stats {
@@ -31,7 +36,7 @@
   display: flex;
   align-items: baseline;
   gap: var(--s-4);
-  padding: var(--s-5) var(--s-4) var(--s-5) 0;
+  padding: var(--s-4) var(--s-4) var(--s-4) 0;
   border-bottom: 1px solid var(--rule-hair);
 }
 .about-cap-no {
@@ -55,7 +60,7 @@
 }
 .about-quote {
   margin: 0;
-  padding: var(--s-6) 0;
+  padding: var(--s-5) 0;
   border-bottom: 1px solid var(--rule-hair);
   max-width: var(--measure);
 }

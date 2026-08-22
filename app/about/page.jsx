@@ -14,7 +14,7 @@ export default function AboutPage() {
       <div className="sheet section">
         <div className="stack stack-4 about-head">
           <span className="label label--orange">Sheet A-04</span>
-          <h1>About</h1>
+          <h1 className="about-title">About</h1>
           <p className="lede">
             Velan Concast is a precast concrete products manufacturer based in Coimbatore.
             Production runs across a two-acre yard split into Unit-I and Unit-II, where

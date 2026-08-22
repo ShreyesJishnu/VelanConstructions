@@ -21,7 +21,7 @@
 .hdr-mark { display: inline-flex; align-items: center; min-height: 44px; flex: none; }
 .hdr-mark img { width: clamp(132px, 14vw, 180px); height: auto; }
 
-.hdr-nav ul { display: flex; gap: clamp(var(--s-3), 1.6vw, var(--s-6)); justify-content: center; }
+.hdr-nav ul { display: flex; gap: clamp(var(--s-3), 1.6vw, var(--s-6)); justify-content: flex-start; }
 
 .hdr-link {
   display: grid;
@@ -40,7 +40,8 @@
 }
 .hdr-link-title {
   font-family: var(--font-fig);
-  font-size: var(--t-label);
+  font-size: var(--t-ui);
+  font-weight: 600;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
 }
@@ -80,7 +81,8 @@
   border-bottom: 1px solid var(--rule-hair);
   text-decoration: none;
   font-family: var(--font-fig);
-  font-size: var(--t-label);
+  font-size: var(--t-ui);
+  font-weight: 600;
   letter-spacing: var(--track-label);
   text-transform: uppercase;
 }
@@ -113,10 +115,22 @@
   .hdr-toggle { display: inline-flex; align-items: center; justify-content: center; }
   .hdr-drawer { display: block; }
   .hdr-drawer[hidden] { display: none; }
-  .hdr-wa { display: none; }
+  .hdr-call .hdr-wa { display: none; }
   .call-fab { display: inline-flex; }
 }
 
 @media (max-width: 560px) {
-  .hdr-tel { display: none; }
+  /* Pin the tracks. With `auto` the wordmark column collapses: the logo carries
+     the global `max-width: 100%`, so its min-content width is near zero and the
+     1fr column takes the space. The wordmark is the identity anchor and must
+     never shrink, so column one is explicit. */
+  .hdr-inner { grid-template-columns: 108px 1fr auto; gap: var(--s-3); }
+  .hdr-mark img { width: 108px; }
+  .hdr-tel-no { font-size: var(--t-label); }
+  .hdr-tel .label { font-size: 0.625rem; }
 }
+
+/* The header is sticky at every width, so the number is always one tap away.
+   The fixed CALL button added nothing and covered headings and body copy
+   wherever it landed, so it no longer displays. */
+.call-fab { display: none !important; }
